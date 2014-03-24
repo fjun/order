@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans  
+						http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean id="dishClassDao" class="com.order.dao.impl.DishClassDaoImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+	<bean id="dishClassManagerBase" class="com.order.service.impl.DishClassManagerImpl">
+		<property name="dishClassDao" ref="dishClassDao" />
+	</bean>
+	<!-- 此处为代理  -->
+	<bean name="dishClassManager" parent="transactionProxy">
+		<property name="target" ref="dishClassManagerBase" />
+	</bean>
+</beans>
